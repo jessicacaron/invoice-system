@@ -1,0 +1,97 @@
+﻿<Window x:Class="Group_Project.Main.wndMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Group_Project.Main"
+        mc:Ignorable="d"
+        Title="Main Window" Height="600" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TabControl Margin="10,28,10,10" FontSize="14">
+            <TabItem x:Name="tabNewInvoice" Header="New Invoice">
+                <Grid Background="#FFE5E5E5">
+                    <Calendar x:Name="calInvoiceDate" HorizontalAlignment="Left" Margin="23,76,0,0" VerticalAlignment="Top" SelectedDatesChanged="CalendarSelectedDatesChanged"/>
+                    <Button x:Name="btnSaveInvoice" Content="Save Invoice" Margin="99,0,0,10" FontSize="14" HorizontalAlignment="Left" Width="144" Height="34" VerticalAlignment="Bottom" Click="btnSaveInvoice_Click"/>
+                    <DataGrid x:Name="dgLineItems" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,44,10,10" CanUserSortColumns="False" SelectionMode="Single" HorizontalAlignment="Right" Width="283" IsReadOnly="True" CanUserReorderColumns="False" CanUserDeleteRows="False" SelectionChanged="ItemsDataGridSelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Item Code" Binding="{Binding sItemCode}"/>
+                            <DataGridTextColumn Header="Item Desc" Binding="{Binding sItemDesc}"/>
+                            <DataGridTextColumn Header="Item Cost" Binding="{Binding iItemCost}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="btnAddItem" Content="Add Item" Margin="220,0,0,136" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="108" IsEnabled="False" Click="ButtonAddItemClick"/>
+                    <ComboBox x:Name="cbItems" Margin="23,0,0,175" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="166" SelectionChanged="ComboBoxSelectionChanged"/>
+                    <TextBox x:Name="txtBxTotalCost" Margin="0,10,10,0" TextAlignment="Right" TextWrapping="Wrap" Text="$0.00" Focusable="False" HorizontalAlignment="Right" Width="108" Height="23" VerticalAlignment="Top" IsReadOnly="True"/>
+                    <TextBlock Margin="0,12,123,0" TextWrapping="Wrap" Text="Total Cost:" HorizontalAlignment="Right" Width="88" Height="19" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtBxItemCost" Margin="284,0,0,177" TextAlignment="Right" TextWrapping="Wrap" Text="$0.00" Focusable="False" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="55" IsReadOnly="True"/>
+                    <TextBlock Margin="207,0,0,178" TextWrapping="Wrap" Text="Item Cost:" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="72"/>
+                    <TextBlock Margin="23,52,0,0" TextWrapping="Wrap" Text="Invoice Date:" HorizontalAlignment="Left" Width="88" Height="19" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tbInvoiceID" Margin="100,12,0,0" TextWrapping="Wrap" Text="TBD" Focusable="False" HorizontalAlignment="Left" Width="89" Height="23" VerticalAlignment="Top" IsReadOnly="True"/>
+                    <TextBlock Margin="23,13,0,0" TextWrapping="Wrap" Text="Invoice ID:" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="72"/>
+                    <TextBlock Margin="23,0,0,205" TextWrapping="Wrap" Text="New Invoice Item:" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="137"/>
+                    <Button x:Name="btnRemoveItem" Content="Remove Item" Margin="220,0,0,98" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="108" IsEnabled="False" Click="ButtonRemoveItemClick"/>
+                    <TextBox x:Name="txtBxInvoiceDate" Margin="116,51,0,0" TextWrapping="Wrap" Focusable="False" HorizontalAlignment="Left" Width="86" Height="23" VerticalAlignment="Top" IsReadOnly="True"/>
+                    <TextBlock x:Name="txtBxError" HorizontalAlignment="Left" Margin="23,0,0,67" TextWrapping="Wrap" Text="ERROR: Please select an Invoice Date" Height="19" VerticalAlignment="Bottom" Width="323" Foreground="Red" Visibility="Collapsed"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabEditInvoice" Header="Edit Invoice">
+                <Grid>
+
+                    <!--
+                    This functionality belongs in search window, not main window
+                    
+                    <Grid x:Name="gridInvoices" Background="#FFE5E5E5" Visibility="Visible">
+                        <Button x:Name="btnEditInvoice" Content="Edit Invoice" Margin="10,10,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108" IsEnabled="False" Click="btnEditInvoice_Click"/>
+
+                        <DataGrid x:Name="dgInvoices" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,46,0,10" CanUserSortColumns="False" SelectionMode="Single" HorizontalAlignment="Left" Width="248" SelectionChanged="dgInvoices_SelectionChanged" CanUserReorderColumns="False" CanUserDeleteRows="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Invoice ID" Binding="{Binding iInvoiceID}"/>
+                                <DataGridTextColumn Header="Invoice Date" Binding="{Binding sInvoiceDate}"/>
+                                <DataGridTextColumn Header="Total Cost" Binding="{Binding iTotalCost}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                    -->
+
+                    <Grid x:Name="gridEditInvoice" Background="#FFE5E5E5" Visibility="Collapsed">
+                        <Calendar x:Name="calEditorInvoiceDate" HorizontalAlignment="Left" Margin="23,76,0,0" VerticalAlignment="Top" SelectedDatesChanged="CalendarSelectedDatesChanged"/>
+                        <Button x:Name="btnEditorSaveChanges" Content="Save Changes" Margin="202,0,0,10" FontSize="14" HorizontalAlignment="Left" Width="144" Height="34" VerticalAlignment="Bottom" Click="btnEditorSaveChanges_Click"/>
+                        <DataGrid x:Name="dgEditorLineItems" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,44,10,10" CanUserSortColumns="False" SelectionMode="Single" HorizontalAlignment="Right" Width="283" SelectionChanged="ItemsDataGridSelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Item Code" Binding="{Binding sItemCode}"/>
+                                <DataGridTextColumn Header="Item Desc" Binding="{Binding sItemDesc}"/>
+                                <DataGridTextColumn Header="Item Cost" Binding="{Binding iItemCost}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button x:Name="btnEditorAddItem" Content="Add Item" Margin="220,0,0,136" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="108" IsEnabled="False" Click="ButtonAddItemClick"/>
+                        <ComboBox x:Name="cbEditorItems" Margin="23,0,0,175" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="166" SelectionChanged="ComboBoxSelectionChanged"/>
+                        <TextBox x:Name="txtBxEditorTotalCost" Margin="0,10,10,0" TextAlignment="Right" TextWrapping="Wrap" Text="$0.00" Focusable="False" HorizontalAlignment="Right" Width="108" Height="23" VerticalAlignment="Top"/>
+                        <TextBlock Margin="0,12,123,0" TextWrapping="Wrap" Text="Total Cost:" HorizontalAlignment="Right" Width="88" Height="19" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtBxEditorItemCost" Margin="284,0,0,177" TextAlignment="Right" TextWrapping="Wrap" Text="$0.00" Focusable="False" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="55"/>
+                        <TextBlock Margin="207,0,0,178" TextWrapping="Wrap" Text="Item Cost:" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="72"/>
+                        <TextBlock Margin="23,52,0,0" TextWrapping="Wrap" Text="Invoice Date:" HorizontalAlignment="Left" Width="88" Height="19" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtBxEditorInvoiceID" Margin="100,12,0,0" TextWrapping="Wrap" Focusable="False" HorizontalAlignment="Left" Width="45" Height="23" VerticalAlignment="Top"/>
+                        <TextBlock Margin="23,13,0,0" TextWrapping="Wrap" Text="Invoice ID:" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="72"/>
+                        <TextBlock Margin="23,0,0,205" TextWrapping="Wrap" Text="New Invoice Item:" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="137"/>
+                        <TextBox x:Name="txtBxEditorInvoiceDate" Margin="116,51,0,0" TextWrapping="Wrap" Focusable="False" HorizontalAlignment="Left" Width="86" Height="23" VerticalAlignment="Top" IsReadOnly="True"/>
+                        <Button x:Name="btnEditorRemoveItem" Content="Remove Item" Margin="220,0,0,98" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="108" IsEnabled="False" Click="ButtonRemoveItemClick"/>
+                        <Button x:Name="btnEditorDiscardChanges" Content="Discard Changes" Margin="23,0,0,10" FontSize="14" HorizontalAlignment="Left" Width="144" Height="34" VerticalAlignment="Bottom" Click="btnEditorDiscardChanges_Click"/>
+                        <TextBlock x:Name="txtBxEditorError" HorizontalAlignment="Left" Margin="23,0,0,67" TextWrapping="Wrap" Text="ERROR: Please select an Invoice Date" Height="19" VerticalAlignment="Bottom" Width="323" Foreground="Red" Visibility="Collapsed"/>
+
+                    </Grid>
+                    <TextBlock x:Name="txtBlSelectInvoice" HorizontalAlignment="Center" Margin="0,137,0,0" TextAlignment="Center" TextWrapping="Wrap" Text="Select an Invoice to Edit from the Search Window" VerticalAlignment="Top" Height="79" Width="232"/>
+                </Grid>
+
+            </TabItem>
+        </TabControl>
+
+        <Menu Height="23" VerticalAlignment="Top">
+            <MenuItem Header="Search">
+                <MenuItem Header="Search for Invoice" Click="MenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+
+
+    </Grid>
+</Window>

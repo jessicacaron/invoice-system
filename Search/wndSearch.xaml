@@ -1,0 +1,29 @@
+﻿<Window x:Class="Group_Project.Search.wndSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Group_Project.Search"
+        mc:Ignorable="d"
+        Title="Search Window" Height="450" Width="800">
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns="False" x:Name="dgDisplayInvoices" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="90,137,90,90">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Invoice ID" Binding="{Binding iInvoiceID}"/>
+                <DataGridTextColumn Header="Invoice Date" Binding="{Binding sInvoiceDate}"/>
+                <DataGridTextColumn Header="Total Cost" Binding="{Binding iTotalCost}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnClearFilter" Content="Clear Filter" HorizontalAlignment="Left" Margin="610,46,0,0" VerticalAlignment="Top" FontSize="16" Height="39" Width="100" Click="btnClearFilter_Click"/>
+        <Button x:Name="btnSelectInvoice" Content="Edit Invoice" HorizontalAlignment="Left" Margin="268,360,0,0" VerticalAlignment="Top" Height="39" Width="118" FontSize="16" Click="btnSelectInvoice_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="417,360,0,0" VerticalAlignment="Top" Height="39" Width="118" FontSize="16" Click="btnCancel_Click"/>
+        <GroupBox Header="Filter Results" Margin="90,10,222,315"/>
+        <Label Content="Invoice Number" HorizontalAlignment="Left" Margin="132,44,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbInvoiceNumber" HorizontalAlignment="Left" Margin="120,72,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="cbSelection_SelectionChanged"/>
+        <Label Content="Invoice Date" HorizontalAlignment="Left" Margin="294,44,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbInvoiceDate" HorizontalAlignment="Left" Margin="273,72,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="cbSelection_SelectionChanged"/>
+        <Label Content="Total Cost" HorizontalAlignment="Left" Margin="455,44,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbTotalCost" HorizontalAlignment="Left" Margin="426,72,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="cbSelection_SelectionChanged" />
+
+    </Grid>
+</Window>
